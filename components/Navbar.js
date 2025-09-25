@@ -1,8 +1,13 @@
 import Link from "next/link"
 import { Key } from 'lucide-react';
 import { ModeToggle } from "./Theme-toggler";
+import { cookies } from "next/headers";
+import { Button } from "./ui/button";
+import { logout } from "@/app/actions";
 
-const Navbar = () => {
+const Navbar = async () => {
+    const cookieStore = await cookies()
+    const hasCookie = cookieStore.has('session')
     return (
         <header className="px-4 lg:px-6 h-14 flex items-center border-b">
             <Link href="/" className="flex items-center justify-center">
@@ -19,6 +24,16 @@ const Navbar = () => {
                 <Link href="/qr" className="text-sm font-medium hover:underline underline-offset-4">
                     QR Code
                 </Link>
+                {hasCookie ? (
+                    <div className="flex items-center gap-4">
+                        <Link href="/dashboard" className="text-sm font-medium hover:underline underline-offset-4">
+                            Dashboard
+                        </Link>
+                        <Button onClick={logout} variant="outline">Logout</Button>
+                    </div>
+                ) : (
+                    ""
+                )}
                 <ModeToggle />
             </nav>
         </header>

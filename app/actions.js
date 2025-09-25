@@ -48,7 +48,7 @@ export async function login(id, pass, role) {
     const realPassword = AES.decrypt(data[0].password || "", process.env.SESSION_SECRET).toString(enc.Utf8)
     if (pass === realPassword) {
         // const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
-        await createSession(data[0]);
+        await createSession(data[0].application_id);
         if (role === "admin") {
             redirect("/dashboard/admin");
         } else if (role === "student") {
@@ -57,6 +57,8 @@ export async function login(id, pass, role) {
             redirect("/dashboard/staff");
         } else if (role === "warden") {
             redirect("/dashboard/warden");
+        } else if (role === "canteen-manager"){
+            redirect("/dashboard/canteen-manager");
         }
     } else {
         return false
@@ -64,8 +66,6 @@ export async function login(id, pass, role) {
 }
 
 export async function logout() {
-    const date = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
-    await sql.query(`INSERT INTO notifications (title, created_at, category, label) VALUES ('Logout', '${date}','logout','Logout')`);
     await deleteSession();
     redirect("/auth");
 }

@@ -138,6 +138,7 @@ const AuthFormPage = () => {
                                             <SelectItem value="staff">Staff</SelectItem>
                                             <SelectItem value="warden">Warden</SelectItem>
                                             <SelectItem value="student">Student</SelectItem>
+                                            <SelectItem value="canteen-manager">Canteen Manager</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -195,6 +196,7 @@ const AuthFormPage = () => {
                                             <SelectItem value="staff">Staff</SelectItem>
                                             <SelectItem value="warden">Warden</SelectItem>
                                             <SelectItem value="student">Student</SelectItem>
+                                            <SelectItem value="canteen-manager">Canteen Manager</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
