@@ -13,14 +13,8 @@ const Navbar = () => {
                 <Link href="/admin" className="text-sm font-medium hover:underline underline-offset-4">
                     Admin
                 </Link>
-                <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">
-                    Testimonials
-                </Link>
-                <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">
-                    Pricing
-                </Link>
-                <Link href="#" className="text-sm font-medium hover:underline underline-offset-4">
-                    Contact
+                <Link href="/auth" className="text-sm font-medium hover:underline underline-offset-4">
+                    Auth
                 </Link>
                 <ModeToggle />
             </nav>
