@@ -1,9 +1,11 @@
-import React from 'react'
+import CanteenManagerAddMenuForm from "./Form"
 
 const CanteenManagerAddMenu = () => {
-  return (
-    <div>CanteenManagerAddMenu</div>
-  )
+    return (
+        <div>
+            <CanteenManagerAddMenuForm />
+        </div>
+    )
 }
 
 export default CanteenManagerAddMenu

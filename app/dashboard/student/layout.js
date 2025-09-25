@@ -1,7 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/app/dashboard/canteen-manager/app-sidebar"
+import { AppSidebar } from "@/app/dashboard/student/app-sidebar"
 
-export default function CanteenManagerLayout({ children }) {
+export default function StudentLayout({ children }) {
   return (
     <SidebarProvider>
       <AppSidebar />

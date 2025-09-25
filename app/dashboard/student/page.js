@@ -1,9 +1,9 @@
 import React from 'react'
 
-const StudentDashboard = () => {
+const CanteenManager = () => {
   return (
-    <div>StudentDashboard</div>
+    <div>CanteenManager</div>
   )
 }
 
-export default StudentDashboard
+export default CanteenManager

@@ -1,4 +1,4 @@
-import { NotebookPen, Home, Eye } from "lucide-react"
+import { Bone, Home, Eye } from "lucide-react"
 
 import {
     Sidebar,
@@ -15,18 +15,13 @@ import {
 const items = [
     {
         title: "Home",
-        url: "/dashboard/canteen-manager",
+        url: "/dashboard/student",
         icon: Home,
     },
     {
-        title: "Add Menu",
-        url: "/dashboard/canteen-manager/add-menu",
-        icon: NotebookPen,
-    },
-    {
-        title: "View Menu",
-        url: "/dashboard/canteen-manager/view-menu",
-        icon: Eye,
+        title: "Food Feedback",
+        url: "/dashboard/student/food-feedback",
+        icon: Bone,
     },
 ]
 

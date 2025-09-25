@@ -8,6 +8,7 @@ import { logout } from "@/app/actions";
 const Navbar = async () => {
     const cookieStore = await cookies()
     const hasCookie = cookieStore.has('session')
+    const role = cookieStore.get('role')
     return (
         <header className="px-4 lg:px-6 h-14 flex items-center border-b">
             <Link href="/" className="flex items-center justify-center">
@@ -26,7 +27,7 @@ const Navbar = async () => {
                 </Link>
                 {hasCookie ? (
                     <div className="flex items-center gap-4">
-                        <Link href="/dashboard" className="text-sm font-medium hover:underline underline-offset-4">
+                        <Link href={`/dashboard/${role.value}`} className="text-sm font-medium hover:underline underline-offset-4">
                             Dashboard
                         </Link>
                         <Button onClick={logout} variant="outline">Logout</Button>
