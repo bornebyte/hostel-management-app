@@ -1,6 +1,6 @@
 import React from 'react';
 import { getMenuFeedback } from '@/app/actions';
-import FeedbackView from './FeedbackView';
+import FeedbackView from '../FeedbackView';
 
 const ViewFeedbackPage = async () => {
   const feedbackData = await getMenuFeedback();

@@ -1,4 +1,4 @@
-import { NotebookPen, Home, Eye, MessageSquareQuote, Send } from "lucide-react"
+import { NotebookPen, Home } from "lucide-react"
 
 import {
     Sidebar,
@@ -15,28 +15,13 @@ import {
 const items = [
     {
         title: "Home",
-        url: "/dashboard/canteen-manager",
+        url: "/dashboard/warden",
         icon: Home,
     },
     {
-        title: "Add Menu",
-        url: "/dashboard/canteen-manager/add-menu",
+        title: "Attendance",
+        url: "/dashboard/warden/attendance",
         icon: NotebookPen,
-    },
-    {
-        title: "View Menu",
-        url: "/dashboard/canteen-manager/view-menu",
-        icon: Eye,
-    },
-    {
-        title: "View Feedback",
-        url: "/dashboard/canteen-manager/view-feedback",
-        icon: MessageSquareQuote,
-    },
-    {
-        title: "Broadcast Message",
-        url: "/dashboard/canteen-manager/broadcast-message",
-        icon: Send,
     },
 ]
 

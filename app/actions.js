@@ -138,8 +138,125 @@ export async function createMenuFeedbackTable() {
 }
 
 export async function addOrUpdateMenuFeedback({ menuId, userId, rating, comments }) {
-    await createMenuFeedbackTable()
+    await createMenuFeedbackTable();
     const sql = neon(process.env.DATABASE_URL);
-    const result = await sql`INSERT INTO menu_feedback (menu_id, user_id, rating, comments) VALUES (${menuId}, ${userId}, ${rating}, ${comments}) RETURNING *;`;
+    // const result = await sql`INSERT INTO menu_feedback (menu_id, user_id, rating, comments) VALUES (${menuId}, ${userId}, ${rating}, ${comments}) RETURNING *;`;
+    const result = await sql`
+    INSERT INTO menu_feedback (menu_id, user_id, rating, comments)
+    VALUES (${menuId}, ${userId}, ${rating}, ${comments})
+    RETURNING *;
+  `;
     return result[0];
 }
+
+export async function getMenuFeedback() {
+    await createMenuFeedbackTable(); // Ensure table exists
+    const sql = neon(process.env.DATABASE_URL);
+    const feedback = await sql`
+        SELECT 
+            mf.id, mf.rating, mf.comments, mf.created_at,
+            u.name as user_name,
+            m.date, m.meal_time, m.items
+        FROM menu_feedback mf
+        JOIN menus m ON mf.menu_id = m.id
+        JOIN users u ON mf.user_id = u.application_id
+        ORDER BY m.date DESC, mf.created_at DESC;
+    `;
+    return feedback;
+}
+
+export async function createTableBroadcastMessage(){
+    const sql = neon(process.env.DATABASE_URL);
+    await sql`
+        CREATE TABLE IF NOT EXISTS broadcast_messages (
+            id SERIAL PRIMARY KEY,
+            subject VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
+            sender_id VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `;
+}
+
+export async function sendBroadcastMessage(subject, message, senderId) {
+    const sql = neon(process.env.DATABASE_URL);
+    await createTableBroadcastMessage();
+    const result = await sql`
+        INSERT INTO broadcast_messages (subject, message, sender_id)
+        VALUES (${subject}, ${message}, ${senderId})
+        RETURNING *;
+    `;
+    return result[0];
+}
+
+export async function getBroadcastMessages() {
+    const sql = neon(process.env.DATABASE_URL);
+    await createTableBroadcastMessage();
+    const messages = await sql`
+        SELECT bm.id, bm.subject, bm.message, bm.created_at, u.name as sender_name
+        FROM broadcast_messages bm
+        JOIN users u ON bm.sender_id = u.application_id
+        ORDER BY bm.created_at DESC;
+    `;
+    return messages;
+}
+
+export async function createAttendenceTable() {
+    const sql = neon(process.env.DATABASE_URL);
+    await sql`
+        CREATE TABLE IF NOT EXISTS attendence (
+            id SERIAL PRIMARY KEY,
+            present TEXT[],
+            absent TEXT[],
+            date DATE NOT NULL DEFAULT CURRENT_DATE,
+            warden_id VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(date)
+        );
+    `;
+}
+
+export async function markAttendance(presentStudents, absentStudents, wardenId) {
+    const sql = neon(process.env.DATABASE_URL);
+    await createAttendenceTable();
+    const today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
+
+    let attendanceRecord = await sql`
+        SELECT * FROM attendence WHERE date = ${today};
+    `;
+
+    if (attendanceRecord.length === 0) {
+        // No record for today, create a new one
+        await sql`
+            INSERT INTO attendence (present, absent, date, warden_id)
+            VALUES (${presentStudents}, ${absentStudents}, ${today}, ${wardenId});
+        `;
+    } else {
+        // Record for today exists, update it
+        await sql`
+            UPDATE attendence
+            SET present = ${presentStudents}, absent = ${absentStudents}, updated_at = CURRENT_TIMESTAMP
+            WHERE date = ${today};
+        `;
+    }
+    return true;
+}
+
+export async function getAttendanceForDate(date) {
+    const sql = neon(process.env.DATABASE_URL);
+    await createAttendenceTable();
+    const attendance = await sql`
+        SELECT * FROM attendence WHERE date = ${date};
+    `;
+    return attendance[0]; // Should only be one record per day
+}
+
+export async function getStudents() {
+    const sql = neon(process.env.DATABASE_URL);
+    const students = await sql`
+        SELECT application_id, name FROM users WHERE role = 'student';
+    `;
+    return students;
+}
+
