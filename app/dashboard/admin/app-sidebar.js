@@ -19,11 +19,6 @@ const items = [
         icon: Home,
     },
     {
-        title: "Add Menu",
-        url: "/dashboard/admin/add-menu",
-        icon: NotebookPen,
-    },
-    {
         title: "View Food Feedback",
         url: "/dashboard/admin/view-feedback",
         icon: MessageSquareQuote,
