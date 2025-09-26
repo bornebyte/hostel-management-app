@@ -1,4 +1,4 @@
-import { NotebookPen, Home } from "lucide-react"
+import { NotebookPen, Home, MessageCircle, Eye, Send } from "lucide-react"
 
 import {
     Sidebar,
@@ -23,6 +23,21 @@ const items = [
         url: "/dashboard/warden/attendance",
         icon: NotebookPen,
     },
+    {
+        title: "Messages",
+        url: "/dashboard/warden/messages",
+        icon: MessageCircle,
+    },
+    {
+        title: "View Menu",
+        url: "/dashboard/warden/view-menu",
+        icon: Eye,
+    },
+    {
+        title: "Broadcast Message",
+        url: "/dashboard/warden/broadcast-message",
+        icon: Send,
+    }
 ]
 
 export function AppSidebar() {

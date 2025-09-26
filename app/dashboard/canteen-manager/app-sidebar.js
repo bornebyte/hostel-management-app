@@ -1,4 +1,4 @@
-import { NotebookPen, Home, Eye, MessageSquareQuote, Send } from "lucide-react"
+import { NotebookPen, Home, Eye, MessageSquareQuote, Send, MessageCircle } from "lucide-react"
 
 import {
     Sidebar,
@@ -37,6 +37,11 @@ const items = [
         title: "Broadcast Message",
         url: "/dashboard/canteen-manager/broadcast-message",
         icon: Send,
+    },
+    {
+        title: "Message",
+        url: "/dashboard/canteen-manager/messages",
+        icon: MessageCircle,
     },
 ]
 

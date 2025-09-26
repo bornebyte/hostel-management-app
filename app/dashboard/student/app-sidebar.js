@@ -1,4 +1,4 @@
-import { Bone, Home, Eye } from "lucide-react"
+import { Bone, Eye, Home, MessageCircle, MessageSquare, Send } from "lucide-react"
 
 import {
     Sidebar,
@@ -22,6 +22,21 @@ const items = [
         title: "Food Feedback",
         url: "/dashboard/student/food-feedback",
         icon: Bone,
+    },
+    {
+        title: "Messages",
+        url: "/dashboard/student/messages",
+        icon: MessageCircle,
+    },
+    {
+        title: "Feedback",
+        url: "/dashboard/student/feedback",
+        icon: Send,
+    },
+    {
+        title: "View Menu",
+        url: "/dashboard/student/view-menu",
+        icon: Eye,
     },
 ]
 

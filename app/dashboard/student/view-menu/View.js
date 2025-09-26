@@ -18,7 +18,7 @@ import { toast } from 'sonner'
 
 const mealOrder = ['breakfast', 'lunch', 'snacks', 'dinner'];
 
-const CanteenManagerViewMenuChild = ({ initialMenuData, initialDate }) => {
+const StudentViewMenu = ({ initialMenuData, initialDate }) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [date, setDate] = useState(new Date(initialDate))
@@ -97,10 +97,10 @@ const CanteenManagerViewMenuChild = ({ initialMenuData, initialDate }) => {
                         <li key={index} className="text-base">{item}</li>
                       ))}
                     </ul>
-                    {/* <div className="flex gap-2 mt-4 justify-end">
+                    <div className="flex gap-2 mt-4 justify-end">
                       <Button variant="outline" size="sm" onClick={() => handleEdit(menu.meal_time)}><Pencil className="h-4 w-4 mr-2" />Edit</Button>
                       <Button variant="destructive" size="sm" onClick={() => handleDelete(menu.id, menu.meal_time)}><Trash2 className="h-4 w-4 mr-2" />Delete</Button>
-                    </div> */}
+                    </div>
                   </CardContent>
                 </Card>
               </AccordionContent>
@@ -118,4 +118,4 @@ const CanteenManagerViewMenuChild = ({ initialMenuData, initialDate }) => {
   )
 }
 
-export default CanteenManagerViewMenuChild
+export default StudentViewMenu

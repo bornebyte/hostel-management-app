@@ -168,7 +168,7 @@ export async function getMenuFeedback() {
 export async function createTableBroadcastMessage(){
     const sql = neon(process.env.DATABASE_URL);
     await sql`
-        CREATE TABLE IF NOT EXISTS broadcast_messages (
+        CREATE TABLE IF NOT EXISTS messages (
             id SERIAL PRIMARY KEY,
             subject VARCHAR(255) NOT NULL,
             message TEXT NOT NULL,
@@ -178,12 +178,12 @@ export async function createTableBroadcastMessage(){
     `;
 }
 
-export async function sendBroadcastMessage(subject, message, senderId) {
+export async function sendBroadcastMessage(subject, message, senderId, role) {
     const sql = neon(process.env.DATABASE_URL);
     await createTableBroadcastMessage();
     const result = await sql`
-        INSERT INTO broadcast_messages (subject, message, sender_id)
-        VALUES (${subject}, ${message}, ${senderId})
+        INSERT INTO messages (subject, message, sender_id, role)
+        VALUES (${subject}, ${message}, ${senderId}, ${role})
         RETURNING *;
     `;
     return result[0];
@@ -193,8 +193,44 @@ export async function getBroadcastMessages() {
     const sql = neon(process.env.DATABASE_URL);
     await createTableBroadcastMessage();
     const messages = await sql`
+        SELECT bm.id, bm.subject, bm.message, bm.created_at, u.name as sender_name, u.role as sender_role
+        FROM messages bm
+        JOIN users u ON bm.sender_id = u.application_id
+        ORDER BY bm.created_at DESC;
+    `;
+    return messages;
+}
+
+export async function createBroadcastStudentFeedback() {
+    const sql = neon(process.env.DATABASE_URL);
+    await sql`
+        CREATE TABLE IF NOT EXISTS student_feedback (
+            id SERIAL PRIMARY KEY,
+            subject VARCHAR(255) NOT NULL,
+            message TEXT NOT NULL,
+            sender_id VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    `;
+}
+
+export async function sendBroadcastStudentFeedback(subject, message, senderId) {
+    const sql = neon(process.env.DATABASE_URL);
+    await createBroadcastStudentFeedback();
+    const result = await sql`
+        INSERT INTO student_feedback (subject, message, sender_id)
+        VALUES (${subject}, ${message}, ${senderId})
+        RETURNING *;
+    `;
+    return result[0];
+}
+
+export async function getBroadcastStudentFeedback() {
+    const sql = neon(process.env.DATABASE_URL);
+    await createBroadcastStudentFeedback();
+    const messages = await sql`
         SELECT bm.id, bm.subject, bm.message, bm.created_at, u.name as sender_name
-        FROM broadcast_messages bm
+        FROM student_feedback bm
         JOIN users u ON bm.sender_id = u.application_id
         ORDER BY bm.created_at DESC;
     `;

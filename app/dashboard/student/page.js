@@ -1,9 +1,9 @@
 import React from 'react'
 
-const CanteenManager = () => {
+const StudentManager = () => {
   return (
-    <div>CanteenManager</div>
+    <div>Hello</div>
   )
 }
 
-export default CanteenManager
+export default StudentManager
