@@ -22,9 +22,6 @@ const Navbar = async () => {
                 <Link href="/auth" className="text-sm font-medium hover:underline underline-offset-4">
                     Auth
                 </Link>
-                <Link href="/qr" className="text-sm font-medium hover:underline underline-offset-4">
-                    QR Code
-                </Link>
                 {hasCookie ? (
                     <div className="flex items-center gap-4">
                         <Link href={`/dashboard/${role.value}`} className="text-sm font-medium hover:underline underline-offset-4">
